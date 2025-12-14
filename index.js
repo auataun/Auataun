@@ -49,7 +49,7 @@ function getDonationEmoji(amount) {
     if (amount >= 100000) return '<:nak:1449806391807185130>';
     if (amount >= 10000) return '<:blimp:1449791290442252390>';
     if (amount >= 1000) return '<:sign:1449791616889127002>';
-    return '<:sign:1434591601598140468>';
+    return '<:sign:1449791616889127002>';
 }
 
 function formatCommas(number) {
