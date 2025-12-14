@@ -45,8 +45,8 @@ app.get('/health', (req, res) => {
 
 function getDonationEmoji(amount) {
     if (amount >= 10000000) return '<:startfall:1449791407035519249>';
-    if (amount >= 1000000) return '<:smite:1321143164148645981>';
-    if (amount >= 100000) return '<:nuike:1414154435457843200>';
+    if (amount >= 1000000) return '<:gong:1449806386807439412>';
+    if (amount >= 100000) return '<:nak:1449806391807185130>';
     if (amount >= 10000) return '<:blimp:1449791290442252390>';
     if (amount >= 1000) return '<:sign:1449791616889127002>';
     return '<:sign:1434591601598140468>';
@@ -183,7 +183,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         console.log('🔄 Attempting to load Robux image...');
         
         try {
-            const robuxImageUrl = 'https://cdn.discordapp.com/emojis/1313730612117508156.png?size=96';
+            const robuxImageUrl = 'https://cdn.discordapp.com/emojis/1381864904767832104.png';
             console.log(`🔄 Loading Robux image from: ${robuxImageUrl}`);
             
             const robuxImage = await loadImage(robuxImageUrl);
