@@ -183,7 +183,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         console.log('🔄 Attempting to load Robux image...');
         
         try {
-            const robuxImageUrl = 'https://cdn.discordapp.com/emojis/1012071667155370076.png?size=96';
+            const robuxImageUrl = 'https://cdn.discordapp.com/emojis/1313730612117508156.png?size=96';
             console.log(`🔄 Loading Robux image from: ${robuxImageUrl}`);
             
             const robuxImage = await loadImage(robuxImageUrl);
