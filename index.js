@@ -194,7 +194,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
             
             const imageSize = 52;
             const xPos = 365 - (textWidth / 2) - imageSize - 1;
-            const yPos = 43;
+            const yPos = 60;
 
             console.log(`🔄 Creating temp canvas for Robux image...`);
             const tempCanvas = createCanvas(imageSize, imageSize);
