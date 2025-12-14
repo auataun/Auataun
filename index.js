@@ -8,13 +8,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 registerFont('./Montserrat-Bold.ttf', { 
   family: 'Montserrat', 
   weight: 'bold',
   style: 'normal'
 })
-
 app.use((req, res, next) => {
     console.log('🌐 INCOMING REQUEST:');
     console.log('Method:', req.method);
@@ -46,11 +44,11 @@ app.get('/health', (req, res) => {
 });
 
 function getDonationEmoji(amount) {
-    if (amount >= 10000000) return '<:startfall:1414154493259681923>';
-    if (amount >= 1000000) return '<:smite:1414154476800966776>';
-    if (amount >= 100000) return '<:nuike:1414154435457843200>';
-    if (amount >= 10000) return '<:blimp:1400850994119577600>';
-    if (amount >= 5000) return '<:sign:1434591601598140468>';
+    if (amount >= 10000) return '<:startfall:1414154493259681923>';
+    if (amount >= 1000) return '<:smite:1414154476800966776>';
+    if (amount >= 100) return '<:nuike:1414154435457843200>';
+    if (amount >= 10) return '<:blimp:1400850994119577600>';
+    if (amount >= 5) return '<:sign:1434591601598140468>';
     return '<:sign:1434591601598140468>';
 }
 
@@ -59,11 +57,11 @@ function formatCommas(number) {
 }
 
 function getColor(robux) {
-    if (robux >= 10000000) return '#FB0505';
-    if (robux >= 1000000) return '#EF1085';
-    if (robux >= 100000) return '#FA04F2';
-    if (robux >= 10000) return '#01d9FF';
-    if (robux >= 5000) return '#FF8801';
+    if (robux >= 10000) return '#FB0505';
+    if (robux >= 1000) return '#EF1085';
+    if (robux >= 100) return '#FA04F2';
+    if (robux >= 10) return '#01d9FF';
+    if (robux >= 5) return '#FF8801';
     return '#00FF00';
 }
 
@@ -104,7 +102,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.clearRect(0, 0, 700, 200);
         console.log('✅ Canvas cleared');
 
-            if (amount >= 1000000) {
+            if (amount >= 1000) {
         const gradient = ctx.createLinearGradient(0, 170, 0, 200);
         gradient.addColorStop(0, donationColor + '05');
         gradient.addColorStop(0.5, donationColor + '22');
@@ -112,7 +110,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 170, 700, 50);
     }
-   if (amount >= 10000000) {
+    if (amount >= 10000) {
         const gradient = ctx.createLinearGradient(0, 50, 0, 200);
         gradient.addColorStop(0, donationColor + '10');
         gradient.addColorStop(0.3, donationColor + '40');
@@ -166,7 +164,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.font = 'bold 18px Montserrat';
         ctx.textAlign = 'center';
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 4;
         ctx.globalCompositeOperation = 'source-over';
         
         ctx.strokeText(`@${donatorName}`, 138, 170);
@@ -180,7 +178,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.font = 'bold 36px Montserrat';
         ctx.textAlign = 'center';
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 6;
+        ctx.lineWidth = 8;
 
         console.log('🔄 Attempting to load Robux image...');
         
@@ -194,9 +192,9 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
             const text = `${formatCommas(amount)}`;
             const textWidth = ctx.measureText(text).width;
             
-            const imageSize = 53;
+            const imageSize = 52;
             const xPos = 365 - (textWidth / 2) - imageSize - 1;
-            const yPos = 42;
+            const yPos = 55;
 
             console.log(`🔄 Creating temp canvas for Robux image...`);
             const tempCanvas = createCanvas(imageSize, imageSize);
@@ -283,7 +281,7 @@ app.post('/donation', async (req, res) => {
 
         const attachment = new AttachmentBuilder(imageBuffer, { name: 'donation.png' });
 
-        const channel = await client.channels.fetch('1420042400968999025');
+        const channel = await client.channels.fetch('1368454360710905961');
         await channel.send({
             content: `${getDonationEmoji(Amount)} \`@${donatorDisplayName}\` donated **<:smallrobux:1434592131271626772>${formatCommas(Amount)} Robux** to \`@${raiserDisplayName}\``,
             embeds: [{
