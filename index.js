@@ -164,7 +164,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.font = 'bold 18px Montserrat';
         ctx.textAlign = 'center';
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 8;
+        ctx.lineWidth = 5;
         ctx.globalCompositeOperation = 'source-over';
         
         ctx.strokeText(`@${donatorName}`, 138, 170);
@@ -183,7 +183,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         console.log('🔄 Attempting to load Robux image...');
         
         try {
-            const robuxImageUrl = 'https://cdn.discordapp.com/emojis/1381864904767832104.png';
+            const robuxImageUrl = 'https://cdn.discordapp.com/emojis/1012071667155370076.png?size=96';
             console.log(`🔄 Loading Robux image from: ${robuxImageUrl}`);
             
             const robuxImage = await loadImage(robuxImageUrl);
