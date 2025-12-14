@@ -44,11 +44,11 @@ app.get('/health', (req, res) => {
 });
 
 function getDonationEmoji(amount) {
-    if (amount >= 10000) return '<:startfall:1414154493259681923>';
-    if (amount >= 1000) return '<:smite:1414154476800966776>';
-    if (amount >= 100) return '<:nuike:1414154435457843200>';
-    if (amount >= 10) return '<:blimp:1400850994119577600>';
-    if (amount >= 5) return '<:sign:1434591601598140468>';
+    if (amount >= 10000000) return '<:startfall:1449791407035519249>';
+    if (amount >= 1000000) return '<:smite:1321143164148645981>';
+    if (amount >= 100000) return '<:nuike:1414154435457843200>';
+    if (amount >= 10000) return '<:blimp:1449791290442252390>';
+    if (amount >= 1000) return '<:sign:1449791616889127002>';
     return '<:sign:1434591601598140468>';
 }
 
@@ -57,11 +57,11 @@ function formatCommas(number) {
 }
 
 function getColor(robux) {
-    if (robux >= 10000) return '#FB0505';
-    if (robux >= 1000) return '#EF1085';
-    if (robux >= 100) return '#FA04F2';
-    if (robux >= 10) return '#01d9FF';
-    if (robux >= 5) return '#FF8801';
+    if (robux >= 10000000) return '#FB0505';
+    if (robux >= 1000000) return '#EF1085';
+    if (robux >= 100000) return '#FA04F2';
+    if (robux >= 10000) return '#01d9FF';
+    if (robux >= 1000) return '#FF8801';
     return '#00FF00';
 }
 
@@ -102,15 +102,15 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.clearRect(0, 0, 700, 200);
         console.log('✅ Canvas cleared');
 
-            if (amount >= 1000) {
-        const gradient = ctx.createLinearGradient(0, 170, 0, 200);
+            if (amount >= 1000000) {
+        const gradient = ctx.createLinearGradient(0, 170, 0, 210);
         gradient.addColorStop(0, donationColor + '05');
         gradient.addColorStop(0.5, donationColor + '22');
         gradient.addColorStop(1, donationColor + '43');
         ctx.fillStyle = gradient;
-        ctx.fillRect(0, 170, 700, 50);
+        ctx.fillRect(0, 170, 700, 60);
     }
-    if (amount >= 10000) {
+    if (amount >= 10000000) {
         const gradient = ctx.createLinearGradient(0, 50, 0, 200);
         gradient.addColorStop(0, donationColor + '10');
         gradient.addColorStop(0.3, donationColor + '40');
@@ -164,7 +164,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.font = 'bold 18px Montserrat';
         ctx.textAlign = 'center';
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 2;
         ctx.globalCompositeOperation = 'source-over';
         
         ctx.strokeText(`@${donatorName}`, 138, 170);
@@ -178,7 +178,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.font = 'bold 36px Montserrat';
         ctx.textAlign = 'center';
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 8;
+        ctx.lineWidth = 6;
 
         console.log('🔄 Attempting to load Robux image...');
         
@@ -194,7 +194,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
             
             const imageSize = 52;
             const xPos = 365 - (textWidth / 2) - imageSize - 1;
-            const yPos = 55;
+            const yPos = 43;
 
             console.log(`🔄 Creating temp canvas for Robux image...`);
             const tempCanvas = createCanvas(imageSize, imageSize);
@@ -283,7 +283,7 @@ app.post('/donation', async (req, res) => {
 
         const channel = await client.channels.fetch('1449789912655335445');
         await channel.send({
-            content: `${getDonationEmoji(Amount)} \`@${donatorDisplayName}\` donated **<:smallrobux:1434592131271626772>${formatCommas(Amount)} Robux** to \`@${raiserDisplayName}\``,
+            content: `${getDonationEmoji(Amount)} \`@${donatorDisplayName}\` donated **<:smallrobux:1449791401750429719>${formatCommas(Amount)} Robux** to \`@${raiserDisplayName}\``,
             embeds: [{
                 color: parseInt(getColor(Amount).replace('#', ''), 16),
                 image: { url: "attachment://donation.png" },
