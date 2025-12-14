@@ -205,7 +205,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
             
             console.log('🔄 Applying color to Robux image...');
             tempCtx.globalCompositeOperation = 'source-in';
-            tempCtx.fillStyle = donationColor;
+            tempCtx.fillStyle = donationColor + 'FF';
             tempCtx.fillRect(0, 0, imageSize, imageSize);
 
             console.log('🔄 Drawing colored Robux image to main canvas...');
