@@ -164,7 +164,7 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.font = 'bold 18px Montserrat';
         ctx.textAlign = 'center';
         ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 8;
         ctx.globalCompositeOperation = 'source-over';
         
         ctx.strokeText(`@${donatorName}`, 138, 170);
