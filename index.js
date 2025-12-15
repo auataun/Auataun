@@ -246,20 +246,19 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
 }
 
 app.post('/donation', async (req, res) => {
-    console.log('📥 FULL REQUEST RECEIVED:');
     console.log('Body:', req.body);
     
     const { DonatorId, RaiserId, DonatorName, RaiserName, Amount } = req.body;
     
-    // Handle anonymous users
+
     const isDonatorAnonymous = DonatorId === 1 || DonatorName === "Anonymous" || !DonatorName.startsWith('@');
     const isRaiserAnonymous = RaiserId === 1 || RaiserName === "Anonymous" || !RaiserName.startsWith('@');
     
-    // Use default Roblox avatar (ID 1) for anonymous users
+
     const donatorAvatarId = isDonatorAnonymous ? 1 : DonatorId;
     const raiserAvatarId = isRaiserAnonymous ? 1 : RaiserId;
     
-    // Set display names to "@Anonymous" for anonymous users
+
     const donatorDisplayName = isDonatorAnonymous ? "Anonymous" : DonatorName.replace('@', '');
     const raiserDisplayName = isRaiserAnonymous ? "Anonymous" : RaiserName.replace('@', '');
     
