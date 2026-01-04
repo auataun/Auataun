@@ -14,7 +14,7 @@ registerFont('./Montserrat-Bold.ttf', {
   style: 'normal'
 })
 app.use((req, res, next) => {
-    console.log('🌐 INCOMING REQUEST:');
+    console.log('REQUEST:');
     console.log('Method:', req.method);
     console.log('URL:', req.url);
     console.log('Headers:', req.headers);
@@ -75,15 +75,15 @@ async function getRobloxThumbnail(userId) {
             console.log(`✅ Got avatar URL: ${avatarUrl}`);
             return avatarUrl;
         } else {
-            console.log(`❌ No avatar found for user ${userId}, using fallback`);
+            console.log(`No avatar found for user ${userId}`);
         }
     } catch (error) {
-        console.log(`❌ Error fetching avatar for ${userId}:`, error.message);
+        console.log(`Error fetching avatar for ${userId}:`, error.message);
     }
     
-    // Fallback URL
+
     const fallbackUrl = `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=150&height=150&format=png`;
-    console.log(`🔄 Using fallback URL: ${fallbackUrl}`);
+    console.log(`${fallbackUrl}`);
     return fallbackUrl;
 }
 
@@ -94,13 +94,13 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         const canvas = createCanvas(700, 200);
         const ctx = canvas.getContext('2d');
         
-        console.log('✅ Canvas created');
+  
         
         const donationColor = getColor(amount);
-        console.log(`✅ Donation color: ${donationColor}`);
+     
         
         ctx.clearRect(0, 0, 700, 200);
-        console.log('✅ Canvas cleared');
+   
 
             if (amount >= 1000000) {
         const gradient = ctx.createLinearGradient(0, 170, 0, 210);
@@ -119,16 +119,16 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.fillRect(0, 50, 700, 150);
     }
         
-        // Try loading images with error handling
-        console.log('🔄 Loading donator image...');
+     
+  
         const donatorImg = await loadImage(donatorAvatar);
-        console.log('✅ Donator image loaded');
+   
         
-        console.log('🔄 Loading raiser image...');
+    
         const raiserImg = await loadImage(raiserAvatar);
-        console.log('✅ Raiser image loaded');
+   
         
-        // Draw donator avatar
+
         ctx.save();
         ctx.beginPath();
         ctx.arc(138, 100, 45, 0, Math.PI * 2);
@@ -136,9 +136,9 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.clip();
         ctx.drawImage(donatorImg, 93, 55, 90, 90);
         ctx.restore();
-        console.log('✅ Donator avatar drawn');
+
         
-        // Draw raiser avatar
+
         ctx.save();
         ctx.beginPath();
         ctx.arc(568, 100, 45, 0, Math.PI * 2);
@@ -146,9 +146,9 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.clip();
         ctx.drawImage(raiserImg, 523, 55, 90, 90);
         ctx.restore();
-        console.log('✅ Raiser avatar drawn');
+
         
-        // Draw borders
+
         ctx.strokeStyle = donationColor;
         ctx.lineWidth = 4;
         ctx.beginPath();
@@ -157,9 +157,9 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.beginPath();
         ctx.arc(568, 100, 45, 0, Math.PI * 2);
         ctx.stroke();
-        console.log('✅ Avatar borders drawn');
+
         
-        // Draw names
+
         ctx.fillStyle = '#FFFFFF';
         ctx.font = 'bold 18px Montserrat';
         ctx.textAlign = 'center';
@@ -171,23 +171,21 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
         ctx.fillText(`@${donatorName}`, 138, 170);
         ctx.strokeText(`@${raiserName}`, 568, 170);
         ctx.fillText(`@${raiserName}`, 568, 170);
-        console.log('✅ Names drawn');
-        
-        // Draw amount with Robux imae
+
         ctx.fillStyle = donationColor;
         ctx.font = 'bold 36px Montserrat';
         ctx.textAlign = 'center';
         ctx.strokeStyle = '#000000';
         ctx.lineWidth = 6;
 
-        console.log('🔄 Attempting to load Robux image...');
+
         
         try {
             const robuxImageUrl = 'https://cdn.discordapp.com/emojis/1381864904767832104.png';
-            console.log(`🔄 Loading Robux image from: ${robuxImageUrl}`);
+
             
             const robuxImage = await loadImage(robuxImageUrl);
-            console.log('✅ Robux image loaded successfully');
+     
             
             const text = `${formatCommas(amount)}`;
             const textWidth = ctx.measureText(text).width;
@@ -196,51 +194,49 @@ async function createDonationImage(donatorAvatar, raiserAvatar, donatorName, rai
             const xPos = 365 - (textWidth / 2) - imageSize - 1;
             const yPos = 60;
 
-            console.log(`🔄 Creating temp canvas for Robux image...`);
+
             const tempCanvas = createCanvas(imageSize, imageSize);
             const tempCtx = tempCanvas.getContext('2d');
             
-            console.log('🔄 Drawing Robux image to temp canvas...');
+
             tempCtx.drawImage(robuxImage, 0, 0, imageSize, imageSize);
             
-            console.log('🔄 Applying color to Robux image...');
+ 
             tempCtx.globalCompositeOperation = 'source-in';
             tempCtx.fillStyle = donationColor + 'FF';
             tempCtx.fillRect(0, 0, imageSize, imageSize);
 
-            console.log('🔄 Drawing colored Robux image to main canvas...');
+
             ctx.drawImage(tempCanvas, xPos, yPos);
             
-            console.log('🔄 Drawing amount text...');
+
             ctx.strokeText(text, 365, 100);
             ctx.fillText(text, 365, 100);
             
-            console.log('✅ Robux image and amount drawn successfully');
+
             
         } catch (robuxError) {
-            console.error('❌ Robux image failed, using text fallback:', robuxError.message);
-            // Fallback to text with Robux symbol
+
             const amountText = `⏣ ${formatCommas(amount)}`;
             ctx.strokeText(amountText, 350, 100);
             ctx.fillText(amountText, 350, 100);
-            console.log('✅ Amount drawn with text fallback');
+
         }
         
-        // Draw "donated to" text
+  
         ctx.fillStyle = '#FFFFFF';
         ctx.font = 'bold 28px Montserrat';
         ctx.strokeStyle = '#000000';
         ctx.lineWidth = 8;
         ctx.strokeText('donated to', 350, 140);
         ctx.fillText('donated to', 350, 140);
-        console.log('✅ "donated to" text drawn');
+
         
-        console.log('✅ Image creation completed successfully');
+  
         return canvas.toBuffer();
         
     } catch (error) {
-        console.error('❌ Error in createDonationImage:', error);
-        console.error('Error details:', error.message, error.stack);
+
         throw error;
     }
 }
@@ -262,9 +258,7 @@ app.post('/donation', async (req, res) => {
     const donatorDisplayName = isDonatorAnonymous ? "Anonymous" : DonatorName.replace('@', '');
     const raiserDisplayName = isRaiserAnonymous ? "Anonymous" : RaiserName.replace('@', '');
     
-    console.log('👤 Processed names:');
-    console.log('- Donator:', donatorDisplayName, '(anonymous:', isDonatorAnonymous, ')');
-    console.log('- Raiser:', raiserDisplayName, '(anonymous:', isRaiserAnonymous, ')');
+
     
     try {
         const donatorAvatar = await getRobloxThumbnail(donatorAvatarId);
@@ -292,21 +286,21 @@ app.post('/donation', async (req, res) => {
             files: [attachment]
         });
         
-        console.log('✅ Donation processed successfully');
+
         res.json({ success: true });
     } catch (error) {
-        console.error('❌ Error processing donation:', error);
+
         res.status(500).json({ success: false, error: error.message });
     }
 });
 
 client.on('ready', () => {
-    console.log(`✅ Logged in as ${client.user.tag}`);
+    console.log(`logged in ${client.user.tag}`);
 });
 // commit pls
 const PORT = 10000;
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`HTTP server running on port ${PORT}`);
+    console.log(`server running on port ${PORT}`);
 });
 
 client.login(process.env.TOKEN);
